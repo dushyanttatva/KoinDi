@@ -67,4 +67,21 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    // Koin
+    val koinVersion = "3.4.0"
+    implementation("io.insert-koin:koin-android:$koinVersion")
+    implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
+    // Retrofit
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    // Paging
+    val pagingVersion = "3.3.6"
+    implementation ("androidx.paging:paging-common-android:$pagingVersion")
+    implementation ("androidx.paging:paging-runtime-ktx:$pagingVersion")
+    implementation ("androidx.paging:paging-compose:$pagingVersion")
+    // Coil for image loading
+    implementation ("io.coil-kt:coil-compose:2.1.0")
 }
