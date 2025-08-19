@@ -1,7 +1,5 @@
 package com.example.koindi.data.model
 
-import com.google.gson.annotations.SerializedName
-
 data class Movie(
     val id: Int,
     val title: String?,

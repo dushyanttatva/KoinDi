@@ -81,7 +81,9 @@ dependencies {
     val pagingVersion = "3.3.6"
     implementation ("androidx.paging:paging-common-android:$pagingVersion")
     implementation ("androidx.paging:paging-runtime-ktx:$pagingVersion")
-    implementation ("androidx.paging:paging-compose:$pagingVersion")
+    implementation ("androidx.paging:paging-compose:1.0.0-alpha20")
     // Coil for image loading
     implementation ("io.coil-kt:coil-compose:2.1.0")
+    // Constraint layout
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.1")
 }
