@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -20,6 +21,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -27,7 +29,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.koindi.R
 import kotlinx.coroutines.delay
@@ -47,8 +48,35 @@ fun Navigation(navController: NavHostController) {
         composable(route = Screen.SimpleAnimation.route) {
             SimpleAnimation()
         }
+        composable(route = Screen.ListScreen.route) {
+            Lists()
+        }
         composable(route = Screen.TextInputScreen.route) {
             TextInputScreen(navController = navController)
+        }
+        composable(route = Screen.TextFieldsButtons.route) {
+            TextFieldsButtons()
+        }
+        composable(route = Screen.ConstraintLayoutExample.route) {
+            ConstraintLayoutExample()
+        }
+        composable(route = Screen.TimerScreen.route) {
+            Timer(
+                totalTime = 20L * 1000L,
+                handleColor = Color.Green,
+                inActiveBarColor = Color.DarkGray,
+                activeBarColor = Color.Green,
+                modifier = Modifier.size(200.dp)
+            )
+        }
+        composable(route = Screen.CircularProgressBar.route) {
+            CircularProgressBar(
+                percentage = 0.8f,
+                number = 100
+            )
+        }
+        composable(route = Screen.ConstraintLayoutExample.route) {
+            ConstraintLayoutExample()
         }
         composable(
             route = Screen.DetailScreen.route + "/{name}",

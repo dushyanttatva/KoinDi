@@ -1,6 +1,18 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
+}
+
+kotlin {
+    sourceSets {
+        debug {
+            kotlin.srcDir("build/generated/ksp/debug/kotlin")
+        }
+        release {
+            kotlin.srcDir("build/generated/ksp/release/kotlin")
+        }
+    }
 }
 
 android {
@@ -88,4 +100,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.1")
     // Navigation
     implementation("androidx.navigation:navigation-compose")
+    implementation("io.github.raamcosta.compose-destinations:core:1.9.42-beta")
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.42-beta")
+    // Permissions
+    implementation("com.google.accompanist:accompanist-permissions:0.30.1")
 }

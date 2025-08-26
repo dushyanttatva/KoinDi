@@ -2,6 +2,8 @@ package com.example.koindi.ui.screen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,6 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import kotlinx.coroutines.delay
 import kotlin.math.cos
 import kotlin.math.sin
@@ -52,37 +55,40 @@ fun Timer(
             value = currentTime.toFloat() / totalTime.toFloat()
         }
     }
-
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-            .onSizeChanged {
-                size = it
-            }
-    ){
-        Canvas(modifier = modifier) {
-            drawArc(
-                color = inActiveBarColor,
-                startAngle = -215f,
-                sweepAngle = 250f,
-                useCenter = false,
-                size= Size(size.width.toFloat(), size.height.toFloat()),
-                style = Stroke(
-                    width = strokeWidth.toPx(),
-                    cap = StrokeCap.Round
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = modifier
+                .onSizeChanged {
+                    size = it
+                }
+        ) {
+            Canvas(modifier = modifier) {
+                drawArc(
+                    color = inActiveBarColor,
+                    startAngle = -215f,
+                    sweepAngle = 250f,
+                    useCenter = false,
+                    size = Size(size.width.toFloat(), size.height.toFloat()),
+                    style = Stroke(
+                        width = strokeWidth.toPx(),
+                        cap = StrokeCap.Round
+                    )
                 )
-            )
-            drawArc(
-                color = activeBarColor,
-                startAngle = -215f,
-                sweepAngle = 250f * value,
-                useCenter = false,
-                size= Size(size.width.toFloat(), size.height.toFloat()),
-                style = Stroke(
-                    width = strokeWidth.toPx(),
-                    cap = StrokeCap.Round
+                drawArc(
+                    color = activeBarColor,
+                    startAngle = -215f,
+                    sweepAngle = 250f * value,
+                    useCenter = false,
+                    size = Size(size.width.toFloat(), size.height.toFloat()),
+                    style = Stroke(
+                        width = strokeWidth.toPx(),
+                        cap = StrokeCap.Round
+                    )
                 )
-            )
 
 //            val center = Offset(size.width / 2f, size.height / 2f)
 //            val beta = (250f * value + 145f) * (Math.PI / 180f).toFloat()
@@ -97,44 +103,45 @@ fun Timer(
 //                cap = StrokeCap.Round
 //            )
 
-            val center = Offset(size.width / 2f, size.height / 2f)
-            val r = size.width / 2f
-            rotate( 250 * value - 215f, pivot = center) {
-                drawPoints(
-                    listOf(Offset(center.x + r, center.y)),
-                    pointMode = PointMode.Points,
-                    color = handleColor,
-                    strokeWidth = (strokeWidth * 3f).toPx(),
-                    cap = StrokeCap.Round
-                )
+                val center = Offset(size.width / 2f, size.height / 2f)
+                val r = size.width / 2f
+                rotate(250 * value - 215f, pivot = center) {
+                    drawPoints(
+                        listOf(Offset(center.x + r, center.y)),
+                        pointMode = PointMode.Points,
+                        color = handleColor,
+                        strokeWidth = (strokeWidth * 3f).toPx(),
+                        cap = StrokeCap.Round
+                    )
+                }
             }
-        }
-        Text(
-            text = (currentTime / 1000L).toString(),
-            color = Color.Black,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Button(
-            onClick = {
-                      if(currentTime <= 0L) {
-                          currentTime = totalTime
-                          isTimerRunning = true
-                      } else {
-                          isTimerRunning = !isTimerRunning
-                      }
-            },
-            modifier = Modifier.align(Alignment.BottomCenter),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = if(!isTimerRunning || currentTime <= 0L) Color.Green
+            Text(
+                text = (currentTime / 1000L).toString(),
+                color = Color.Black,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Button(
+                onClick = {
+                    if (currentTime <= 0L) {
+                        currentTime = totalTime
+                        isTimerRunning = true
+                    } else {
+                        isTimerRunning = !isTimerRunning
+                    }
+                },
+                modifier = Modifier.align(Alignment.BottomCenter),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (!isTimerRunning || currentTime <= 0L) Color.Green
                     else Color.Red
                 )
-        ) {
+            ) {
                 Text(
-                    text = if(!isTimerRunning && currentTime >= 0L) "Start"
+                    text = if (!isTimerRunning && currentTime >= 0L) "Start"
                     else if (isTimerRunning && currentTime > 0L) "Stop"
                     else "Reset"
                 )
+            }
         }
     }
 }

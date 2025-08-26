@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.koindi.data.model.BottomNavItem
 import com.example.koindi.ui.screen.BottomNavigationBar
@@ -31,46 +32,50 @@ class MainActivity : ComponentActivity() {
         setContent {
             KoinDiTheme {
                 val navController = rememberNavController()
+                val currentBackStack by navController.currentBackStackEntryAsState()
+                val currentDestination = currentBackStack?.destination?.route
+
+                val showBottomBar = currentDestination != Screen.SplashScreen.route
+                val items = listOf(
+                    BottomNavItem(
+                        label = "Home",
+                        icon = Icons.Default.Home,
+                        route = Screen.HomeScreen.route
+                    ),
+                    BottomNavItem(
+                        label = "Movies",
+                        icon = Icons.Default.Favorite,
+                        route = Screen.MovieListScreen.route
+                    ),
+                    BottomNavItem(
+                        label = "Animation",
+                        icon = Icons.Default.Favorite,
+                        route = Screen.SimpleAnimation.route
+                    ),
+                    BottomNavItem(
+                        label = "Greet",
+                        icon = Icons.Default.Favorite,
+                        route = Screen.TextInputScreen.route
+                    ),
+                )
+
                 Scaffold(
                     bottomBar =  {
-                         BottomNavigationBar(
-                             items = listOf(
-                                 BottomNavItem(
-                                     label = "Home",
-                                     icon = Icons.Default.Home,
-                                     route = Screen.HomeScreen.route,
-                                     badgeCount = 0,
-                                 ),
-                                 BottomNavItem(
-                                     label = "Movies",
-                                     icon = Icons.Default.Favorite,
-                                     route = Screen.MovieListScreen.route,
-                                     badgeCount = 0,
-                                 ),
-                                 BottomNavItem(
-                                     label = "Animation",
-                                     icon = Icons.Default.Favorite,
-                                     route = Screen.SimpleAnimation.route,
-                                     badgeCount = 0,
-                                 ),
-                                 BottomNavItem(
-                                     label = "Greet",
-                                     icon = Icons.Default.Favorite,
-                                     route = Screen.TextInputScreen.route,
-                                     badgeCount = 0,
-                                 ),
-                             ),
-                             navController = navController,
-                             onItemClick = { item ->
-                                 navController.navigate(item.route) {
-                                     popUpTo(navController.graph.startDestinationId) {
-                                         saveState = true
-                                     }
-                                     launchSingleTop = true
-                                     restoreState = true
-                                 }
-                             }
-                         )
+                        if (showBottomBar) {
+                            BottomNavigationBar(
+                                items = items,
+                                navController = navController,
+                                onItemClick = { item ->
+                                    navController.navigate(item.route) {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
+                                }
+                            )
+                        }
                     }
                 ) { paddingValue ->
                     // A surface container using the 'background' color from the theme
